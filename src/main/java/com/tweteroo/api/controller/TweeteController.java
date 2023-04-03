@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,15 +26,21 @@ public class TweeteController {
     @Autowired
     private TweeteService service;
 
-    @GetMapping
-    public List<Tweete> listAll() {
-        return service.listAll();
-    }
-    
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public String createTweet(@RequestBody @Valid TweeteDTO req) {
         service.createTweet(req);
         return "OK";
+    }
+
+    // @GetMapping
+    // public List<Tweete> listAll() {
+    // return service.listAll();
+    // }
+
+    @GetMapping
+    public List<TweeteDTO> getTweetsByPage(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page) {
+        return service.getTweetsByPage(page);
     }
 }
