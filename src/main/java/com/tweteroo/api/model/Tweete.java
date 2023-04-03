@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Tweete {
     public Tweete(TweeteDTO data) {
-        this.username = data.avatar();
+        this.username = data.username();
         this.avatar = data.avatar();
         this.tweet = data.tweet();
     }

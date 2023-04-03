@@ -22,15 +22,21 @@ public class TweeteService {
         repository.save(new Tweete(dto));
     }
 
-    // public List<Tweete> listAll() {
-    // return repository.findAll();
-    // }
-
     public List<TweeteDTO> getTweetsByPage(int page) {
         int size = 5;
         PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.ASC, "id");
 
         Page<Tweete> withId = repository.findAllByPage(pageRequest);
+        List<TweeteDTO> withoutId = new ArrayList<>();
+        for (Tweete tweet : withId) {
+            withoutId.add(tweet.clone());
+        }
+
+        return withoutId;
+    }
+
+    public List<TweeteDTO> getTweetsByUser(String username) {
+        List<Tweete> withId = repository.findAllByUsername(username);
         List<TweeteDTO> withoutId = new ArrayList<>();
         for (Tweete tweet : withId) {
             withoutId.add(tweet.clone());
